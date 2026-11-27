@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings and privacy center</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}a:hover{color:#4338CA}
+</style>
+</helmet>
+<div style="width:390px;min-height:1240px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;gap:14px;padding:16px 16px 24px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="Main.dc.html" aria-label="Back to status" style="width:44px;height:44px;border-radius:12px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="back" size="20" hint-size="20px,20px"></dc-import></a>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Settings</span>
+  </div>
+
+  <div style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:16px;display:flex;align-items:center;gap:12px">
+    <div style="width:48px;height:48px;border-radius:14px;background:#111113;color:#F5F5F2;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700">RA</div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">Rachman</span><span style="font-size:12px;color:#5E5E66">Lv 27 · Free plan</span></div>
+    <dc-import name="Icon" icon="chevron" size="18" color="#8A8A92" hint-size="18px,18px"></dc-import>
+  </div>
+
+  <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+    <section style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-size:12px;font-weight:600;color:#5E5E66;padding:0 6px">{{g.title}}</span>
+      <div style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:18px;padding:4px 14px">
+        <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="3">
+          <a href="{{r.href}}" style="display:flex;align-items:center;gap:12px;min-height:52px;border-bottom:1px solid #F0F0EC">
+            <dc-import name="Icon" icon="{{r.icon}}" size="20" color="{{r.fg}}" hint-size="20px,20px"></dc-import>
+            <span style="flex:1;display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:500;color:{{r.fg}}">{{r.name}}</span><span style="font-size:12px;color:#5E5E66">{{r.meta}}</span></span>
+            <dc-import name="Icon" icon="chevron" size="16" color="#8A8A92" hint-size="16px,16px"></dc-import>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-size:12px;font-weight:600;color:#5E5E66;padding:0 6px">Notifications</span>
+    <div style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:18px;padding:4px 14px">
+      <sc-for list="{{toggles}}" as="t" hint-placeholder-count="3">
+        <label style="display:flex;align-items:center;gap:12px;min-height:52px;border-bottom:1px solid #F0F0EC;cursor:pointer">
+          <dc-import name="Icon" icon="{{t.icon}}" size="20" hint-size="20px,20px"></dc-import>
+          <span style="flex:1;font-size:14px;font-weight:500">{{t.name}}</span>
+          <input type="checkbox" checked="{{t.on}}" onChange="{{t.flip}}" style="width:20px;height:20px;accent-color:#111113">
+        </label>
+      </sc-for>
+    </div>
+  </section>
+
+  <a href="Welcome.dc.html" style="min-height:52px;border-radius:16px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Log out</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { n: { lv: true, q: true, pn: false } }; }
+  renderVals() {
+    const N = '#111113', R = '#B42318';
+    const groups = [
+      { title: 'Data sources', rows: [
+        { icon: 'heart', name: 'Connected gear', meta: '3 sources · 1 wearable', href: 'EquipGear.dc.html', fg: N },
+        { icon: 'award', name: 'Credential vault', meta: '+4 INT · +3 DEX', href: 'Credentials.dc.html', fg: N },
+        { icon: 'chart', name: 'Weekly patch notes', meta: 'Every Monday 08:00', href: 'PatchNotes.dc.html', fg: N } ] },
+      { title: 'Privacy center', rows: [
+        { icon: 'log', name: 'View raw events', meta: 'Every record we store, by source', href: 'Log.dc.html', fg: N },
+        { icon: 'lock', name: 'Treasury encryption', meta: 'On this device only', href: '#treasury-key', fg: N },
+        { icon: 'download', name: 'Export my data', meta: 'JSON + CSV', href: '#export', fg: N },
+        { icon: 'trash', name: 'Delete my data', meta: 'Per source or everything', href: '#delete', fg: R } ] },
+      { title: 'Character', rows: [
+        { icon: 'user', name: 'Face & avatar', meta: 'Rescan or edit your face', href: 'FaceSetup.dc.html', fg: N },
+        { icon: 'quests', name: 'Replay Training', meta: 'Any chapter', href: 'TutMap.dc.html', fg: N } ] },
+      { title: 'Account', rows: [
+        { icon: 'star', name: 'Subscription', meta: 'Free · see Premium', href: '#plan', fg: N },
+        { icon: 'shield', name: 'Security', meta: 'Password, sessions', href: '#security', fg: N } ] }
+    ];
+    const n = this.state.n;
+    const toggles = [['lv', 'levelup', 'Level-ups and unlocks'], ['q', 'quests', 'Daily quest reminder'], ['pn', 'bell', 'Patch notes ready']].map(([id, icon, name]) => ({
+      icon, name, on: n[id], flip: () => this.setState({ n: { ...n, [id]: !n[id] } }) }));
+    return { groups, toggles };
+  }
+}
+</script>
+</body>
+</html>

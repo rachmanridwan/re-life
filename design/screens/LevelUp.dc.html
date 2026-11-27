@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Level-up moment</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#2A2A30}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#2A2A30;font-family:Inter,sans-serif;color:#111113;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div role="dialog" aria-label="Level up" style="width:100%;background:#FFFFFF;border-radius:28px;padding:28px 22px 22px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
+    <span style="font-size:12px;font-weight:700;letter-spacing:0.12em;color:#4338CA">LEVEL UP</span>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:40px;color:#A1A1AA">27</span>
+      <dc-import name="Icon" icon="chevron" size="28" color="#A1A1AA" hint-size="28px,28px"></dc-import>
+      <span style="width:96px;height:96px;border-radius:28px;background:#4338CA;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:48px">28</span>
+    </div>
+    <p style="margin:0;font-size:14px;color:#5E5E66;line-height:1.5">Your push-up Trial added verified STR. Next level at 34,900 XP.</p>
+
+    <div style="width:100%;display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{gains}}" as="g" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:#F5F5F2;text-align:left">
+          <dc-import name="Icon" icon="{{g.icon}}" size="20" hint-size="20px,20px"></dc-import>
+          <span style="flex:1;font-size:14px;font-weight:600">{{g.name}}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#5E5E66">{{g.from}}</span>
+          <dc-import name="Icon" icon="chevron" size="14" color="#8A8A92" hint-size="14px,14px"></dc-import>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:#166534">{{g.to}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+      <a href="Breakdown.dc.html" style="min-height:50px;border-radius:14px;border:1px solid #D4D4CF;color:#111113;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Breakdown</a>
+      <a href="Main.dc.html" style="min-height:50px;border-radius:14px;background:#111113;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Let's go</a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { gains: [
+      { icon: 'str', name: 'STR', from: '34', to: '38' },
+      { icon: 'lifting', name: 'Calisthenics', from: 'Lv 6', to: 'Lv 9' },
+      { icon: 'wil', name: 'WIL', from: '41', to: '42' }
+    ] };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New habit</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}
+input:focus{outline:2px solid #4338CA;outline-offset:1px}
+</style>
+</helmet>
+<div style="width:390px;min-height:900px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;gap:18px;padding:16px 20px 28px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="Quests.dc.html" aria-label="Close" style="width:44px;height:44px;border-radius:12px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="close" size="20" hint-size="20px,20px"></dc-import></a>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">New habit</span>
+  </div>
+
+  <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Habit
+    <input type="text" value="Sleep before 23:00" style="min-height:50px;padding:0 14px;border-radius:14px;border:1px solid #D4D4CF;background:#FFFFFF;font-family:Inter,sans-serif;font-size:15px;color:#111113">
+  </label>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-size:13px;font-weight:600">How should we check it?</span>
+    <sc-for list="{{opts}}" as="o" hint-placeholder-count="5">
+      <button onClick="{{o.pick}}" style="min-height:56px;padding:10px 14px;border-radius:14px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;font-family:Inter,sans-serif;background:#FFFFFF;border:{{o.border}};color:#111113">
+        <dc-import name="Icon" icon="{{o.icon}}" size="20" hint-size="20px,20px"></dc-import>
+        <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{o.name}}</span><span style="font-size:12px;color:#5E5E66">{{o.meta}}</span></span>
+        <span style="width:20px;height:20px;border-radius:999px;border:2px solid {{o.dot}};display:flex;align-items:center;justify-content:center"><span style="width:10px;height:10px;border-radius:999px;background:{{o.fill}}"></span></span>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-size:13px;font-weight:600">Days</span>
+    <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px">
+      <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+        <button onClick="{{d.pick}}" style="min-height:44px;border-radius:12px;cursor:pointer;font-family:Inter,sans-serif;font-size:13px;font-weight:600;border:1px solid {{d.border}};background:{{d.bg}};color:{{d.fg}}">{{d.l}}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:{{noteBg}}">
+    <dc-import name="Icon" icon="{{noteIcon}}" size="18" color="{{noteFg}}" hint-size="18px,18px"></dc-import>
+    <span style="font-size:13px;color:{{noteFg}}">{{note}}</span>
+  </div>
+
+  <div style="flex:1"></div>
+  <a href="Quests.dc.html" style="min-height:52px;border-radius:16px;background:#111113;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Save habit</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { o: 'sleep', d: [1, 1, 1, 1, 1, 0, 0] }; }
+  renderVals() {
+    const cur = this.state.o;
+    const opts = [
+      ['sleep', 'sleep', 'Sleep data', 'Smartwatch · suggested'], ['walking', 'walking', 'Steps', 'Phone sensor'],
+      ['eye', 'eye', 'App usage', 'Screen time on Android'], ['timer', 'timer', 'WakaTime', 'Coding time'],
+      ['manual', 'check', 'I’ll check it myself', 'Streak only, no WIL']
+    ].map(([id, icon, name, meta]) => ({ icon, name, meta, pick: () => this.setState({ o: id }),
+      border: cur === id ? '2px solid #4338CA' : '1px solid #E4E4E0', dot: cur === id ? '#4338CA' : '#C8C8C2', fill: cur === id ? '#4338CA' : 'transparent' }));
+    const d = this.state.d;
+    const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((l, i) => ({ l,
+      bg: d[i] ? '#111113' : '#FFFFFF', fg: d[i] ? '#FFFFFF' : '#111113', border: d[i] ? '#111113' : '#E4E4E0',
+      pick: () => { const n = d.slice(); n[i] = n[i] ? 0 : 1; this.setState({ d: n }); } }));
+    const manual = cur === 'manual';
+    return { opts, days,
+      note: manual ? 'Manual habits show a streak but never affect WIL.' : 'Verified: checks itself and counts toward WIL.',
+      noteIcon: manual ? 'eye' : 'shield', noteFg: manual ? '#5E5E66' : '#3730A3', noteBg: manual ? '#ECECE8' : '#EEF0FF' };
+  }
+}
+</script>
+</body>
+</html>

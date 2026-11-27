@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Trial — push-ups</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#0B0B0D;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:16px;padding:16px 20px 28px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <a href="Quests.dc.html" aria-label="Exit trial" style="width:44px;height:44px;border-radius:12px;background:#1C1C22;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="close" size="20" color="#F5F5F2" hint-size="20px,20px"></dc-import></a>
+    <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;color:#A1A1AA">Trial · STR</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px">Max push-ups in 60s</span></div>
+    <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px">0:{{secs}}</span>
+  </div>
+
+  <div style="flex:1;border-radius:24px;background:#16161B;border:1px solid #26262E;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+    <svg width="300" height="220" viewBox="0 0 300 220" role="img" aria-label="Camera view with detected body pose">
+      <g stroke="#818CF8" stroke-width="3" stroke-linecap="round" fill="none">
+        <path d="M60 150 L120 120 L200 118 L250 150"/>
+        <path d="M120 120 L118 165"/><path d="M200 118 L204 165"/>
+        <path d="M250 150 L270 168"/>
+      </g>
+      <g fill="#F5F5F2"><circle cx="45" cy="142" r="9"/><circle cx="120" cy="120" r="5"/><circle cx="200" cy="118" r="5"/><circle cx="118" cy="165" r="5"/><circle cx="204" cy="165" r="5"/><circle cx="250" cy="150" r="5"/><circle cx="270" cy="168" r="5"/></g>
+      <path d="M20 190 H280" stroke="#3F3F46" stroke-width="2" stroke-dasharray="6 6"/>
+    </svg>
+    <span style="position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;background:#0B0B0DCC"><dc-import name="Icon" icon="camera" size="14" color="#F5F5F2" hint-size="14px,14px"></dc-import>On-device pose detection</span>
+    <span style="position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;background:#ECFDF3;color:#166534"><dc-import name="Icon" icon="check" size="14" color="#166534" hint-size="14px,14px"></dc-import>Depth OK</span>
+  </div>
+
+  <div style="display:flex;align-items:flex-end;justify-content:center;gap:10px">
+    <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:84px;line-height:1">{{reps}}</span>
+    <span style="font-size:15px;color:#A1A1AA;padding-bottom:12px">reps · last best 18</span>
+  </div>
+  <button onClick="{{add}}" style="min-height:44px;border-radius:12px;border:1px dashed #3F3F46;background:transparent;font-family:Inter,sans-serif;font-size:13px;color:#A1A1AA;cursor:pointer">Prototype: tap to simulate a rep</button>
+  <span style="font-size:12px;color:#A1A1AA;text-align:center">Video never leaves your phone. Score uses ACSM push-up norms for your age and sex.</span>
+  <a href="LevelUp.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:600"><dc-import name="Icon" icon="pause" size="18" color="#111113" hint-size="18px,18px"></dc-import>Finish trial</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { reps: 14 }; }
+  renderVals() {
+    const reps = this.state.reps;
+    return { reps, secs: String(Math.max(0, 42 - (reps - 14) * 2)).padStart(2, '0'), add: () => this.setState({ reps: reps + 1 }) };
+  }
+}
+</script>
+</body>
+</html>

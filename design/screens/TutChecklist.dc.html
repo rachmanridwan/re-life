@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chapter checklist</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#2A2A30}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#2A2A30;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;justify-content:flex-end">
+  <div style="padding:0 20px 16px;display:flex;flex-direction:column;gap:8px;color:#F5F5F2">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#C7CBFF">CHAPTER 4 · MAKE IT AUTOMATIC</span>
+    <span style="font-size:14px;line-height:1.5;color:#D4D4D8">Steps tick themselves when the app sees them happen.</span>
+  </div>
+  <div role="dialog" aria-label="Chapter checklist" style="background:#FFFFFF;border-radius:28px 28px 0 0;padding:12px 20px 24px;display:flex;flex-direction:column;gap:14px">
+    <div style="align-self:center;width:40px;height:4px;border-radius:2px;background:#D4D4CF"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Checklist</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5E5E66">{{doneCount}} / 3</span>
+    </div>
+    <div style="height:6px;border-radius:999px;background:#ECECE8;overflow:hidden"><div style="width:{{pct}};height:100%;background:#16A34A"></div></div>
+
+    <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+      <button onClick="{{s.tap}}" style="display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 12px;border-radius:14px;cursor:pointer;text-align:left;font-family:Inter,sans-serif;color:#111113;background:{{s.bg}};border:1px solid {{s.border}}">
+        <span style="width:28px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:{{s.dotBg}};border:2px solid {{s.dotBorder}}"><sc-if value="{{s.done}}" hint-placeholder-val="{{ false }}"><dc-import name="Icon" icon="check" size="16" color="#FFFFFF" hint-size="16px,16px"></dc-import></sc-if></span>
+        <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{s.name}}</span><span style="font-size:12px;color:#5E5E66">{{s.meta}}</span></span>
+        <dc-import name="Icon" icon="{{s.icon}}" size="18" color="#5E5E66" hint-size="18px,18px"></dc-import>
+      </button>
+    </sc-for>
+
+    <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;background:#F2F3FF">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#3730A3;width:28px;text-align:center">99</span>
+      <span style="flex:1;font-size:13px;line-height:1.45;color:#3730A3">"Done here. Tonight it checks itself. That one's a First Quest."</span>
+    </div>
+    <a href="TutReward.dc.html" style="min-height:52px;border-radius:16px;background:#111113;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Claim chapter reward</a>
+    <span style="font-size:12px;color:#5E5E66;text-align:center">Prototype: tap a step to tick it.</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { d: [true, true, false] }; }
+  renderVals() {
+    const d = this.state.d;
+    const list = [
+      ['Open Habits', 'Quests → Habits tab', 'quests'],
+      ['Pick a verified check', 'Sleep data · smartwatch', 'sleep'],
+      ['Choose your days', 'Mon–Fri', 'calendar']
+    ];
+    const steps = list.map(([name, meta, icon], i) => ({ name, meta, icon, done: d[i],
+      bg: d[i] ? '#F0FDF4' : '#FFFFFF', border: d[i] ? '#BBF7D0' : '#E4E4E0',
+      dotBg: d[i] ? '#16A34A' : '#FFFFFF', dotBorder: d[i] ? '#16A34A' : '#C8C8C2',
+      tap: () => { const n = d.slice(); n[i] = !n[i]; this.setState({ d: n }); } }));
+    const doneCount = d.filter(Boolean).length;
+    return { steps, doneCount, pct: Math.round(doneCount * 100 / 3) + '%' };
+  }
+}
+</script>
+</body>
+</html>

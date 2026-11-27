@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chapter intro — Future You</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:20px;padding:20px 20px 28px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="TutMap.dc.html" aria-label="Back to Training" style="width:44px;height:44px;border-radius:12px;background:#1C1C22;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="back" size="20" color="#F5F5F2" hint-size="20px,20px"></dc-import></a>
+    <span style="font-size:13px;color:#A1A1AA;flex:1">Training · chapter 4 of 6</span>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#818CF8">CHAPTER 4</span>
+    <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:34px;line-height:1.05">Make it automatic</h1>
+  </div>
+
+  <div style="display:flex;gap:14px;align-items:flex-start">
+    <div style="width:64px;height:64px;flex-shrink:0;border-radius:20px;background:#1E1E36;border:2px solid #4338CA;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <dc-import name="Icon" icon="user" size="24" color="#C7CBFF" hint-size="24px,24px"></dc-import>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#C7CBFF">LV 99</span>
+    </div>
+    <div style="flex:1;border-radius:4px 18px 18px 18px;padding:14px 16px;background:#1C1C22;display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:12px;font-weight:600;color:#A1A1AA">Future You</span>
+      <span style="font-size:16px;line-height:1.5">Motivation fades by Thursday. Systems don't. Let's set one up that checks itself, so you can't lie to it, and it can't lie to you.</span>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+      <div style="display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:#16161B;border:1px solid #22222A">
+        <dc-import name="Icon" icon="{{r.icon}}" size="20" color="{{r.fg}}" hint-size="20px,20px"></dc-import>
+        <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;font-weight:600;color:#A1A1AA">{{r.label}}</span><span style="font-size:14px;font-weight:500">{{r.text}}</span></span>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex:1"></div>
+  <a href="TutCoach.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Start chapter · 2 min</a>
+  <a href="TutMap.dc.html" style="text-align:center;font-size:14px;color:#A1A1AA;min-height:28px">Skip this chapter</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { rows: [
+      { icon: 'wil', fg: '#FBBF24', label: 'YOU’LL LEARN', text: 'Why WIL only moves on verified habits' },
+      { icon: 'quests', fg: '#C7CBFF', label: 'YOU’LL DO', text: 'Set up one habit that checks itself (it proves itself tonight)' },
+      { icon: 'sparkle', fg: '#86EFAC', label: 'REWARD', text: 'Rested XP + “Autopilot” badge' }
+    ] };
+  }
+}
+</script>
+</body>
+</html>

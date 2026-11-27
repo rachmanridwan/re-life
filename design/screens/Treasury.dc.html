@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Treasury</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}a:hover{color:#4338CA}
+</style>
+</helmet>
+<div style="width:390px;min-height:1080px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column">
+  <div style="padding:20px 20px 4px;display:flex;align-items:center;gap:8px">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px">Treasury</span>
+    <span style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:5px 9px;border-radius:999px;background:#ECECE8;color:#3F3F46">
+      <dc-import name="Icon" icon="lock" size="12" color="#3F3F46" hint-size="12px,12px"></dc-import>Private · on device</span>
+    <a href="AddExpense.dc.html" style="margin-left:auto;min-height:44px;padding:0 14px;border-radius:12px;background:#111113;color:#FFFFFF;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600"><dc-import name="Icon" icon="plus" size="16" color="#FFFFFF" hint-size="16px,16px"></dc-import>Expense</a>
+  </div>
+
+  <div style="padding:12px 16px;display:flex;flex-direction:column;gap:12px">
+    <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#5E5E66"><span>November · spent</span><span>Self-tracked</span></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:32px">Rp 4.280.000</span>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+        <div style="padding:10px;border-radius:12px;background:#F5F5F2;display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;color:#5E5E66">Budget left</span><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">Rp 720k</span></div>
+        <div style="padding:10px;border-radius:12px;background:#F5F5F2;display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;color:#5E5E66">Savings rate</span><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">22%</span></div>
+        <div style="padding:10px;border-radius:12px;background:#F5F5F2;display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;color:#5E5E66">Treasury score</span><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">64</span></div>
+      </div>
+    </section>
+
+    <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:16px">Budgets</h2>
+      <sc-for list="{{budgets}}" as="b" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:500;display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="{{b.icon}}" size="16" hint-size="16px,16px"></dc-import>{{b.name}}</span><span style="font-family:'JetBrains Mono',monospace;color:{{b.fg}}">{{b.amt}}</span></div>
+          <div style="height:6px;border-radius:999px;background:#ECECE8;overflow:hidden"><div style="width:{{b.pct}};height:100%;background:{{b.bar}}"></div></div>
+        </div>
+      </sc-for>
+    </section>
+
+    <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:16px">Savings goals</h2>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+        <div style="padding:12px;border-radius:12px;background:#F5F5F2;display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="shield" size="16" color="#0F766E" hint-size="16px,16px"></dc-import>Emergency fund</span><span style="font-size:12px;color:#5E5E66">1.8 of 3 months</span><div style="height:4px;border-radius:999px;background:#E4E4E0;overflow:hidden"><div style="width:60%;height:100%;background:#0F766E"></div></div></div>
+        <div style="padding:12px;border-radius:12px;background:#F5F5F2;display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="code" size="16" color="#0F766E" hint-size="16px,16px"></dc-import>Laptop fund</span><span style="font-size:12px;color:#5E5E66">35% reached</span><div style="height:4px;border-radius:999px;background:#E4E4E0;overflow:hidden"><div style="width:35%;height:100%;background:#0F766E"></div></div></div>
+      </div>
+    </section>
+
+    <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:4px">
+      <h2 style="margin:0 0 6px;font-family:'Space Grotesk',sans-serif;font-size:16px">Recent</h2>
+      <sc-for list="{{tx}}" as="t" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F0F0EC">
+          <span style="width:36px;height:36px;border-radius:10px;background:#F5F5F2;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{t.icon}}" size="18" hint-size="18px,18px"></dc-import></span>
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:500">{{t.name}}</span><span style="font-size:12px;color:#5E5E66">{{t.meta}}</span></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700">{{t.amt}}</span>
+        </div>
+      </sc-for>
+    </section>
+    <span style="font-size:12px;color:#5E5E66;text-align:center">Treasury never affects attributes, level or class.</span>
+  </div>
+
+  <div style="flex:1"></div>
+  <dc-import name="TabBar" active="treasury" hint-size="390px,84px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const ok = { fg: '#111113', bar: '#111113' };
+    const warn = { fg: '#B45309', bar: '#D97706' };
+    const budgets = [
+      { icon: 'food', name: 'Food & drinks', amt: '1.6M / 2M', pct: '80%', ...ok },
+      { icon: 'car', name: 'Transport', amt: '540k / 600k', pct: '90%', ...warn },
+      { icon: 'cloud', name: 'Subscriptions', amt: '210k / 300k', pct: '70%', ...ok },
+      { icon: 'bag', name: 'Shopping', amt: '980k / 1M', pct: '98%', ...warn }
+    ];
+    const tx = [
+      { icon: 'food', name: 'Kopi susu', meta: 'Today · QRIS · Food', amt: '−Rp 28.000' },
+      { icon: 'car', name: 'Ride to office', meta: 'Today · e-wallet · Transport', amt: '−Rp 19.500' },
+      { icon: 'cloud', name: 'Cloud hosting', meta: 'Yesterday · card · Subscriptions', amt: '−Rp 85.000' },
+      { icon: 'income', name: 'Salary transfer', meta: '25 Nov · bank · Income', amt: '+Rp [YOUR AMOUNT]' }
+    ];
+    return { budgets, tx };
+  }
+}
+</script>
+</body>
+</html>

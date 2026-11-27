@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Face scan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{text-decoration:none;color:inherit}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#0B0B0D;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:16px;padding:16px 20px 28px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <a href="FaceSetup.dc.html" aria-label="Cancel scan" style="width:44px;height:44px;border-radius:12px;background:#1C1C22;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="close" size="20" color="#F5F5F2" hint-size="20px,20px"></dc-import></a>
+    <span style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px">Face scan</span>
+    <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;background:#ECFDF3;color:#166534"><dc-import name="Icon" icon="check" size="14" color="#166534" hint-size="14px,14px"></dc-import>Light OK</span>
+  </div>
+
+  <div style="flex:1;border-radius:28px;background:#16161B;border:1px solid #26262E;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+    <svg width="260" height="340" viewBox="0 0 260 340" role="img" aria-label="Face guide with scan progress">
+      <ellipse cx="130" cy="170" rx="104" ry="140" fill="none" stroke="#26262E" stroke-width="10"/>
+      <ellipse cx="130" cy="170" rx="104" ry="140" fill="none" stroke="#818CF8" stroke-width="10" stroke-linecap="round" stroke-dasharray="{{dash}}" transform="rotate(-90 130 170)"/>
+      <g stroke="#818CF8" stroke-opacity="0.35" stroke-width="1" fill="none">
+        <path d="M60 150 Q130 120 200 150"/><path d="M50 190 Q130 170 210 190"/><path d="M65 235 Q130 225 195 235"/>
+        <path d="M130 50 L130 300"/><path d="M90 60 Q80 170 95 290"/><path d="M170 60 Q180 170 165 290"/>
+      </g>
+    </svg>
+    <span style="position:absolute;bottom:16px;left:16px;right:16px;text-align:center;font-size:12px;color:#A1A1AA">Depth camera · processed on this phone</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
+    <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:100%;height:6px;border-radius:3px;background:{{s.bar}}"></div>
+        <span style="font-size:11px;color:{{s.fg}};font-weight:{{s.w}}">{{s.name}}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="text-align:center;display:flex;flex-direction:column;gap:4px">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">{{instruction}}</span>
+    <span style="font-size:13px;color:#A1A1AA">Hold the phone at arm's length. Glasses off if you can.</span>
+  </div>
+  <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+    <a href="FaceAdjust.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">See my face</a>
+  </sc-if>
+  <sc-if value="{{notDone}}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{advance}}" style="min-height:52px;border-radius:16px;border:1px dashed #3F3F46;background:transparent;color:#A1A1AA;font-family:Inter,sans-serif;font-size:14px;cursor:pointer">Prototype: tap to simulate the next angle</button>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { s: 1 }; }
+  renderVals() {
+    const s = this.state.s;
+    const names = ['Front', 'Left', 'Right', 'Up'];
+    const tips = ['Look straight ahead', 'Slowly turn your head left', 'Now slowly turn right', 'Tilt your chin up a little', 'Scan complete'];
+    const steps = names.map((name, i) => ({ name, bar: i < s ? '#818CF8' : (i === s ? '#4F46E5' : '#26262E'), fg: i <= s ? '#F5F5F2' : '#71717A', w: i === s ? 700 : 500 }));
+    const perim = 770;
+    const done = s >= 4;
+    return { steps, instruction: tips[Math.min(s, 4)], done, notDone: !done,
+      dash: Math.round(perim * Math.min(s, 4) / 4) + ' ' + perim,
+      advance: () => this.setState({ s: Math.min(s + 1, 4) }) };
+  }
+}
+</script>
+</body>
+</html>

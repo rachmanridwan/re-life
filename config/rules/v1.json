@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "status": "draft \u2014 level pacing agreed (max level \u2248 1 year for a regular user); see docs/PROGRESSION.md",
+  "tiers": {
+    "S": {
+      "xp_weight": 1.0,
+      "counts_to_attributes": true
+    },
+    "A": {
+      "xp_weight": 1.0,
+      "counts_to_attributes": true
+    },
+    "B": {
+      "xp_weight": 0.5,
+      "xp_weight_after_review": 1.0,
+      "counts_to_attributes": true
+    },
+    "C": {
+      "xp_weight": 0.0,
+      "ghost": true,
+      "counts_to_attributes": false
+    }
+  },
+  "intensity": {
+    "default": 1.0,
+    "hr_zone_2": 1.1,
+    "hr_zone_3": 1.3,
+    "hr_zone_4_plus": 1.5,
+    "max_device_uplift": 1.25
+  },
+  "soft_cap_per_skill_per_day": {
+    "full": 90,
+    "extra_asymptote": 150
+  },
+  "non_minute_xp": {
+    "steps_per_xp": 150,
+    "sleep_full_night_xp": 40,
+    "sleep_min_hours_full": 7,
+    "sleep_zero_below_hours": 5,
+    "github_pr_merged": 20,
+    "github_pr_reviewed_bonus": 10,
+    "github_pr_max_per_day": 5,
+    "github_review_given": 8,
+    "github_review_max_per_day": 5,
+    "trial_completed": 50,
+    "credential_verified": 100
+  },
+  "dedupe": {
+    "min_overlap": 0.5
+  },
+  "plausibility_holds": {
+    "steps_per_day_max": 60000,
+    "running_pace_min_sec_per_km": 170,
+    "running_pace_min_distance_km": 1,
+    "cycling_speed_max_kmh": 60,
+    "single_skill_hours_per_day_max": 10,
+    "zone4_requires_hr": true
+  },
+  "curves": {
+    "form": "total_xp(L) = a * (L-1)^p",
+    "skill": {
+      "a": 0.898,
+      "p": 2.2965
+    },
+    "character": {
+      "a": 2.472,
+      "p": 2.2541
+    },
+    "max_level": 99
+  },
+  "task_xp": {
+    "size": {
+      "S": 10,
+      "M": 25,
+      "L": 50
+    },
+    "daily_cap": 100,
+    "proof_ratio_before_review": 0.5
+  },
+  "attributes": {
+    "window_days": 90,
+    "effort_half_life_days": 30,
+    "effort_formula": "min(1, sqrt(E90 / E_ref))",
+    "measured": {
+      "STR": {
+        "w_cap": 0.3,
+        "w_eff": 0.7,
+        "E_ref": 7000
+      },
+      "AGI": {
+        "w_cap": 0.5,
+        "w_eff": 0.5,
+        "E_ref": 9000
+      },
+      "VIT": {
+        "w_cap": 0.7,
+        "w_eff": 0.3,
+        "E_ref": 4000,
+        "cap_without_wearable": 60
+      }
+    },
+    "earned": {
+      "INT": {
+        "w_eff": 0.75,
+        "w_consistency": 0.25,
+        "E_ref": 6000
+      },
+      "DEX": {
+        "w_eff": 0.75,
+        "w_consistency": 0.25,
+        "E_ref": 8000
+      },
+      "consistency_min_minutes_per_day": 15
+    },
+    "WIL": {
+      "ios": {
+        "adherence": 0.7,
+        "rhythm": 0.3
+      },
+      "android": {
+        "adherence": 0.6,
+        "rhythm": 0.2,
+        "restraint": 0.2
+      }
+    },
+    "credential_bonus": {
+      "max_per_attribute": 10,
+      "full_months": 24,
+      "after_ratio": 0.5,
+      "photo_ratio_before_review": 0.5
+    },
+    "capability_aging": {
+      "full_days": 60,
+      "min_weight": 0.5,
+      "min_weight_at_days": 180
+    },
+    "recompute_local_time": "04:00"
+  },
+  "decline": {
+    "grace_days": 7,
+    "max_drop_per_7_days": 2,
+    "floor_ratio_of_peak": 0.6,
+    "floor_includes_day0": true
+  },
+  "inn": {
+    "days_per_rolling_year": 30,
+    "min_stay_days": 3
+  },
+  "classes": {
+    "dormant_after_days": 14
+  },
+  "quests": {
+    "daily_count": 3,
+    "weekly_count": 2,
+    "steps_target_ratio_of_14d_median": 1.1,
+    "steps_target_cap": 15000,
+    "bonus_ratio": 0.2
+  },
+  "trials": {
+    "retake_cooldown_days": 7,
+    "cooper_vo2max": "(meters - 504.9) / 44.73"
+  },
+  "skill_attribute_weights": {
+    "walking": {
+      "AGI": 0.6,
+      "VIT": 0.4
+    },
+    "running": {
+      "STR": 0.1,
+      "AGI": 0.7,
+      "VIT": 0.2
+    },
+    "cycling": {
+      "STR": 0.2,
+      "AGI": 0.6,
+      "VIT": 0.2
+    },
+    "swimming": {
+      "STR": 0.3,
+      "AGI": 0.5,
+      "VIT": 0.2
+    },
+    "strength_training": {
+      "STR": 0.8,
+      "VIT": 0.2
+    },
+    "calisthenics": {
+      "STR": 0.6,
+      "AGI": 0.2,
+      "VIT": 0.2
+    },
+    "hiit": {
+      "STR": 0.3,
+      "AGI": 0.5,
+      "VIT": 0.2
+    },
+    "yoga_mobility": {
+      "STR": 0.2,
+      "AGI": 0.4,
+      "VIT": 0.4
+    },
+    "martial_arts": {
+      "STR": 0.4,
+      "AGI": 0.4,
+      "DEX": 0.2
+    },
+    "racket_team_sports": {
+      "STR": 0.2,
+      "AGI": 0.6,
+      "VIT": 0.2
+    },
+    "sleep": {
+      "VIT": 1.0
+    },
+    "mindfulness": {
+      "VIT": 0.6,
+      "INT": 0.4
+    },
+    "programming": {
+      "INT": 0.4,
+      "DEX": 0.6
+    },
+    "design": {
+      "INT": 0.2,
+      "DEX": 0.8
+    },
+    "music_practice": {
+      "INT": 0.3,
+      "DEX": 0.7
+    },
+    "writing": {
+      "INT": 0.5,
+      "DEX": 0.5
+    },
+    "language_learning": {
+      "INT": 1.0
+    },
+    "study": {
+      "INT": 1.0
+    },
+    "reading": {
+      "INT": 1.0
+    }
+  },
+  "newcomer_boost": {
+    "multiplier": 2.0,
+    "duration_days": 7,
+    "starts": "prologue_complete",
+    "applies_to": [
+      "skill_xp",
+      "character_xp"
+    ],
+    "affects_attributes": false,
+    "stacks_with_rested": false
+  }
+}

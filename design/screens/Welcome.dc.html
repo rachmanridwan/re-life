@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Welcome</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;padding:56px 24px 32px;gap:28px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><polygon points="18,2 32,10 32,26 18,34 4,26 4,10" fill="none" stroke="#F5F5F2" stroke-width="2"/><polygon points="18,10 25,14 25,22 18,26 11,22 11,14" fill="#4338CA"/></svg>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">[App name]</span>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:40px;line-height:1.05">Your real life,<br>as a character sheet.</h1>
+    <p style="margin:0;font-size:15px;line-height:1.55;color:#A1A1AA">Level up from what you actually do. Every stat is backed by real data from your phone, watch and apps.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{props}}" as="p" hint-placeholder-count="3">
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="width:40px;height:40px;border-radius:12px;background:#1C1C22;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{p.icon}}" size="20" color="#C7CBFF" hint-size="20px,20px"></dc-import></span>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{p.title}}</span><span style="font-size:13px;color:#A1A1AA">{{p.sub}}</span></div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex:1"></div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <a href="SignUp.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Start your Prologue</a>
+    <a href="Login.dc.html" style="min-height:52px;border-radius:16px;border:1px solid #3F3F46;color:#F5F5F2;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">I already have a character</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const props = [
+      { icon: 'shield', title: 'Verified stats', sub: 'Sensor and app data, not checkboxes' },
+      { icon: 'levelup', title: 'Six attributes, 1–99', sub: 'STR, AGI, VIT, INT, DEX, WIL' },
+      { icon: 'lock', title: 'Private by default', sub: 'Your data stays yours' }
+    ];
+    return { props };
+  }
+}
+</script>
+</body>
+</html>

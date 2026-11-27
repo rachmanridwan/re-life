@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Log in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:#3730A3;text-decoration:none}a:hover{color:#1E1B4B}
+input:focus{outline:2px solid #4338CA;outline-offset:1px}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;gap:22px;padding:16px 20px 28px">
+  <a href="Welcome.dc.html" aria-label="Back" style="width:44px;height:44px;border-radius:12px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="back" size="20" hint-size="20px,20px"></dc-import></a>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:28px">Welcome back</h1>
+    <p style="margin:0;font-size:14px;color:#5E5E66">Your streak is waiting.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <button style="min-height:50px;border-radius:14px;border:1px solid #D4D4CF;background:#FFFFFF;font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:#111113;cursor:pointer">Continue with Google</button>
+    <button style="min-height:50px;border-radius:14px;border:1px solid #D4D4CF;background:#FFFFFF;font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:#111113;cursor:pointer">Continue with Apple</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#5E5E66"><div style="flex:1;height:1px;background:#E4E4E0"></div>or with email<div style="flex:1;height:1px;background:#E4E4E0"></div></div>
+
+  <form style="display:flex;flex-direction:column;gap:14px">
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Email
+      <span style="display:flex;align-items:center;gap:8px;min-height:50px;padding:0 14px;border-radius:14px;border:1px solid #D4D4CF;background:#FFFFFF"><dc-import name="Icon" icon="mail" size="18" color="#5E5E66" hint-size="18px,18px"></dc-import><input type="email" placeholder="you@email.com" style="flex:1;border:0;outline:none;background:transparent;font-family:Inter,sans-serif;font-size:15px;color:#111113"></span>
+    </label>
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Password
+      <span style="display:flex;align-items:center;gap:8px;min-height:50px;padding:0 6px 0 14px;border-radius:14px;border:1px solid #D4D4CF;background:#FFFFFF"><dc-import name="Icon" icon="lock" size="18" color="#5E5E66" hint-size="18px,18px"></dc-import><input type="{{pwType}}" placeholder="Your password" style="flex:1;border:0;outline:none;background:transparent;font-family:Inter,sans-serif;font-size:15px;color:#111113"><button type="button" onClick="{{toggle}}" aria-label="{{eyeLabel}}" style="width:40px;height:40px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><dc-import name="Icon" icon="eye" size="18" color="#5E5E66" hint-size="18px,18px"></dc-import></button></span>
+    </label>
+    <a href="#forgot" style="align-self:flex-end;font-size:13px;font-weight:600;min-height:32px;display:flex;align-items:center">Forgot password?</a>
+  </form>
+
+  <div style="flex:1"></div>
+  <a href="Main.dc.html" style="min-height:52px;border-radius:16px;background:#111113;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Log in</a>
+  <p style="margin:0;text-align:center;font-size:14px;color:#5E5E66">New here? <a href="SignUp.dc.html" style="font-weight:600">Create an account</a></p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { show: false }; }
+  renderVals() {
+    const show = this.state.show;
+    return { pwType: show ? 'text' : 'password', eyeLabel: show ? 'Hide password' : 'Show password', toggle: () => this.setState({ show: !show }) };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prologue 2 — equip gear</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:960px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:18px;padding:24px 20px 28px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:#A1A1AA"><span>Prologue</span><span>Step 2 of 5</span></div>
+    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px"><div style="height:4px;border-radius:2px;background:#F5F5F2"></div><div style="height:4px;border-radius:2px;background:#F5F5F2"></div><div style="height:4px;border-radius:2px;background:#3F3F46"></div><div style="height:4px;border-radius:2px;background:#3F3F46"></div><div style="height:4px;border-radius:2px;background:#3F3F46"></div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:30px;line-height:1.1">Equip your gear</h1>
+    <p style="margin:0;font-size:14px;line-height:1.5;color:#A1A1AA">Each source is gear. It verifies your stats and unlocks attributes.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{gear}}" as="g" hint-placeholder-count="6">
+      <div style="border-radius:16px;padding:14px;background:#1C1C22;border:1px solid {{g.border}};display:flex;align-items:center;gap:12px">
+        <span style="width:40px;height:40px;border-radius:12px;background:#26262E;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{g.icon}}" size="20" color="#C7CBFF" hint-size="20px,20px"></dc-import></span>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:14px;font-weight:600">{{g.name}}</span>
+          <span style="font-size:12px;color:#A1A1AA">{{g.meta}}</span>
+        </div>
+        <button onClick="{{g.pick}}" style="min-height:40px;min-width:84px;padding:0 12px;border-radius:12px;cursor:pointer;font-family:Inter,sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:4px;background:{{g.btnBg}};color:{{g.btnFg}};border:1px solid {{g.btnBorder}}">
+          <sc-if value="{{g.on}}" hint-placeholder-val="{{ false }}"><dc-import name="Icon" icon="check" size="14" color="#166534" hint-size="14px,14px"></dc-import></sc-if>{{g.btn}}
+        </button>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="border-radius:14px;padding:12px 14px;background:#1A1A24;display:flex;gap:10px;align-items:flex-start">
+    <dc-import name="Icon" icon="shield" size="18" color="#C7CBFF" hint-size="18px,18px"></dc-import>
+    <span style="font-size:12px;line-height:1.5;color:#D4D4D8">You approve each source on its own. Disconnect any time in the privacy center, and its data stops counting.</span>
+  </div>
+
+  <div style="flex:1"></div>
+  <a href="Reveal.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Import my history</a>
+  <a href="Reveal.dc.html" style="text-align:center;font-size:14px;color:#A1A1AA;min-height:32px">Skip for now</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":960}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { on: { hc: true, gh: true } }; }
+  renderVals() {
+    const on = this.state.on;
+    const list = [
+      ['hc', 'heart', 'Health Connect', 'Steps, workouts, sleep · STR AGI VIT', 'Connect'],
+      ['watch', 'watch', 'Smartwatch', 'Optional · unlocks VIT cap, HR bonus', 'Pair'],
+      ['gh', 'git', 'GitHub', 'Merged PRs, reviews · DEX', 'Connect'],
+      ['wk', 'timer', 'WakaTime', 'Active coding time · DEX', 'Connect'],
+      ['sv', 'cycling', 'Strava', 'Runs and rides · AGI', 'Connect'],
+      ['us', 'eye', 'App usage access', 'Learning apps, focus, screen time · INT WIL', 'Allow']
+    ];
+    const gear = list.map(([id, icon, name, meta, label]) => {
+      const c = !!on[id];
+      return { icon, name, meta, on: c, btn: c ? 'Equipped' : label,
+        btnBg: c ? '#ECFDF3' : '#F5F5F2', btnFg: c ? '#166534' : '#111113', btnBorder: c ? '#ECFDF3' : '#F5F5F2', border: c ? '#3B3B66' : '#2A2A31',
+        pick: () => this.setState({ on: { ...on, [id]: !c } }) };
+    });
+    return { gear };
+  }
+}
+</script>
+</body>
+</html>

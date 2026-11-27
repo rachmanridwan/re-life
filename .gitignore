@@ -1,0 +1,19 @@
+.env
+.env.*
+!.env.example
+.DS_Store
+# Flutter / Dart
+app/.dart_tool/
+app/build/
+app/.flutter-plugins*
+app/ios/Pods/
+app/ios/.symlinks/
+app/ios/Flutter/Generated.xcconfig
+*.iml
+.idea/
+# Supabase
+supabase/.temp/
+supabase/.branches/
+# Python
+__pycache__/
+*.pyc

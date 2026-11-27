@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Achievements</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}a:hover{color:#4338CA}
+</style>
+</helmet>
+<div style="width:390px;min-height:1000px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;gap:12px;padding:16px 16px 24px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="Main.dc.html" aria-label="Back to status" style="width:44px;height:44px;border-radius:12px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="back" size="20" hint-size="20px,20px"></dc-import></a>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;flex:1">Achievements</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700">24 / 120</span>
+  </div>
+
+  <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <span style="font-size:12px;font-weight:600;color:#5E5E66">Displayed title</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;background:#111113;color:#FFFFFF"><dc-import name="Icon" icon="wil" size="14" color="#FBBF24" hint-size="14px,14px"></dc-import>Locked In</span>
+      <span style="font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;border:1px solid #D4D4CF">Prologue Complete</span>
+      <span style="font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;border:1px solid #D4D4CF">Night Owl Reformed</span>
+    </div>
+  </section>
+
+  <div style="display:flex;gap:8px;overflow-x:auto">
+    <sc-for list="{{filters}}" as="f" hint-placeholder-count="6">
+      <button onClick="{{f.pick}}" style="flex-shrink:0;min-height:36px;padding:0 12px;border-radius:999px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:1px solid {{f.border}};background:{{f.bg}};color:{{f.fg}}">{{f.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+    <sc-for list="{{items}}" as="a" hint-placeholder-count="9">
+      <div style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:16px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;opacity:{{a.op}}">
+        <span style="width:48px;height:48px;border-radius:999px;background:{{a.bg}};display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{a.icon}}" size="22" color="{{a.fg}}" hint-size="22px,22px"></dc-import></span>
+        <span style="font-size:12px;font-weight:600;line-height:1.3">{{a.name}}</span>
+        <span style="font-size:10px;color:#5E5E66">{{a.meta}}</span>
+      </div>
+    </sc-for>
+  </div>
+  <span style="font-size:12px;color:#5E5E66;text-align:center">Achievements are cosmetic. They never add stat points.</span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { f: 'all' }; }
+  renderVals() {
+    const cur = this.state.f;
+    const filters = [['all', 'All'], ['mile', 'Milestones'], ['std', 'Standards'], ['cons', 'Consistency'], ['trial', 'Trials'], ['hid', 'Hidden']].map(([id, label]) => ({
+      label, pick: () => this.setState({ f: id }),
+      bg: cur === id ? '#111113' : '#FFFFFF', fg: cur === id ? '#FFFFFF' : '#111113', border: cur === id ? '#111113' : '#E4E4E0'
+    }));
+    const got = { bg: '#EEF0FF', fg: '#3730A3', op: 1 };
+    const no = { bg: '#F5F5F2', fg: '#8A8A92', op: 0.75 };
+    const all = [
+      { c: 'mile', icon: 'code', name: 'Programming Lv 30', meta: 'Aug 12', ...got },
+      { c: 'mile', icon: 'levelup', name: 'Character Lv 25', meta: 'Oct 3', ...got },
+      { c: 'std', icon: 'heart', name: 'VO₂ max: Good', meta: '44.1 / 45.4', ...no },
+      { c: 'std', icon: 'language', name: 'Certified B2', meta: 'Add a score', ...no },
+      { c: 'cons', icon: 'wil', name: '30-day streak', meta: 'Nov 9', ...got },
+      { c: 'cons', icon: 'calendar', name: 'WHO 12 weeks', meta: '7 / 12 weeks', ...no },
+      { c: 'trial', icon: 'str', name: 'Push-up Trial', meta: 'Best 18', ...got },
+      { c: 'trial', icon: 'agi', name: 'Cooper Trial', meta: 'Not taken', ...no },
+      { c: 'hid', icon: 'star', name: '???', meta: 'Hidden', ...no }
+    ];
+    const items = all.filter(a => cur === 'all' || a.c === cur);
+    return { filters, items };
+  }
+}
+</script>
+</body>
+</html>

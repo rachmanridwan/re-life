@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Coach mark — spotlight</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;position:relative;overflow:hidden;padding:20px 16px">
+  <div style="display:flex;flex-direction:column;gap:12px;opacity:0.5">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;padding:0 4px">Status</span>
+    <div style="height:150px;border-radius:20px;background:#FFFFFF;border:1px solid #E4E4E0"></div>
+  </div>
+  <div style="position:absolute;inset:0;background:#111113;opacity:0.72"></div>
+
+  <section style="position:relative;margin-top:16px;background:#FFFFFF;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0.35">Attributes</span>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+      <sc-for list="{{attrs}}" as="a" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:14px;background:{{a.bg}};opacity:{{a.op}};outline:{{a.ring}};outline-offset:3px">
+          <div style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="{{a.icon}}" size="16" color="{{a.fg}}" hint-size="16px,16px"></dc-import><span style="font-size:12px;font-weight:600;color:{{a.fg}}">{{a.key}}</span></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:22px">{{a.val}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div style="position:relative;margin-top:16px;margin-left:auto;width:300px;border-radius:20px;background:#FFFFFF;padding:18px;display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:32px;height:32px;border-radius:10px;background:#1E1E36;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#C7CBFF">99</span>
+      <span style="flex:1;font-size:12px;font-weight:600;color:#5E5E66">Future You</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5E66">{{stepLabel}}</span>
+    </div>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">{{title}}</span>
+    <span style="font-size:14px;line-height:1.5;color:#3F3F46">{{body}}</span>
+    <div style="display:flex;gap:8px">
+      <a href="TutMap.dc.html" style="flex:1;min-height:44px;border-radius:12px;border:1px solid #D4D4CF;color:#5E5E66;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600">Skip</a>
+      <sc-if value="{{last}}" hint-placeholder-val="{{ false }}">
+        <a href="TutChecklist.dc.html" style="flex:1;min-height:44px;border-radius:12px;background:#111113;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600">Let's set it up</a>
+      </sc-if>
+      <sc-if value="{{notLast}}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{next}}" style="flex:1;min-height:44px;border-radius:12px;border:0;background:#111113;color:#FFFFFF;font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer">Next</button>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { s: 0 }; }
+  renderVals() {
+    const steps = [
+      { focus: 'WIL', title: 'This is WIL', body: 'Willpower. It isn’t about how much you do, it’s whether you show up on the days you said you would.' },
+      { focus: 'WIL', title: 'It only trusts evidence', body: 'Ticking a box won’t move it. A habit your sleep data, step count or screen time can confirm will.' },
+      { focus: 'WIL', title: 'And it can go down', body: 'Miss a week and it dips. That’s the point: a 70 here means something, to you.' }
+    ];
+    const s = this.state.s, cur = steps[s];
+    const base = [['STR', 'str', 34], ['AGI', 'agi', 52], ['VIT', 'vit', 58], ['INT', 'int', 47], ['DEX', 'dex', 66], ['WIL', 'wil', 41]];
+    const attrs = base.map(([key, icon, val]) => {
+      const on = key === cur.focus;
+      return { key, icon, val, op: on ? 1 : 0.22, bg: on ? '#FFF7E6' : '#F5F5F2', fg: on ? '#B45309' : '#5E5E66', ring: on ? '2px solid #F59E0B' : 'none' };
+    });
+    return { attrs, title: cur.title, body: cur.body, stepLabel: (s + 1) + ' / ' + steps.length,
+      last: s === steps.length - 1, notLast: s < steps.length - 1, next: () => this.setState({ s: Math.min(s + 1, steps.length - 1) }) };
+  }
+}
+</script>
+</body>
+</html>

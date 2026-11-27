@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Add expense</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#2A2A30}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#2A2A30;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;justify-content:flex-end">
+  <div role="dialog" aria-label="Add expense" style="background:#FFFFFF;border-radius:28px 28px 0 0;padding:12px 20px 24px;display:flex;flex-direction:column;gap:14px">
+    <div style="align-self:center;width:40px;height:4px;border-radius:2px;background:#D4D4CF"></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;flex:1">Add expense</span>
+      <a href="Treasury.dc.html" aria-label="Close" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="close" size="20" hint-size="20px,20px"></dc-import></a>
+    </div>
+    <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:40px">Rp {{amount}}</div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="4">
+        <button onClick="{{c.pick}}" style="min-height:64px;border-radius:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;background:{{c.bg}};color:{{c.fg}};border:1px solid {{c.border}}"><dc-import name="Icon" icon="{{c.icon}}" size="20" color="{{c.fg}}" hint-size="20px,20px"></dc-import>{{c.name}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;border-radius:12px;background:#F0F0EC">
+      <sc-for list="{{pays}}" as="p" hint-placeholder-count="4">
+        <button onClick="{{p.pick}}" style="min-height:36px;border:0;border-radius:9px;cursor:pointer;font-family:Inter,sans-serif;font-size:12px;font-weight:600;background:{{p.bg}};color:{{p.fg}}">{{p.name}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+      <sc-for list="{{keys}}" as="k" hint-placeholder-count="12">
+        <button onClick="{{k.press}}" aria-label="{{k.aria}}" style="min-height:48px;border-radius:12px;border:0;background:#F5F5F2;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#111113">{{k.l}}</button>
+      </sc-for>
+    </div>
+
+    <a href="Treasury.dc.html" style="min-height:52px;border-radius:16px;background:#111113;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Save · today</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { v: '28000', c: 'food', p: 'QRIS' }; }
+  renderVals() {
+    const { v, c, p } = this.state;
+    const cats = [['food', 'Food'], ['car', 'Transport'], ['bag', 'Shopping'], ['cloud', 'Bills']].map(([icon, name]) => ({ icon, name,
+      bg: c === icon ? '#111113' : '#FFFFFF', fg: c === icon ? '#FFFFFF' : '#111113', border: c === icon ? '#111113' : '#E4E4E0', pick: () => this.setState({ c: icon }) }));
+    const pays = ['Cash', 'QRIS', 'E-wallet', 'Bank'].map(name => ({ name, bg: p === name ? '#FFFFFF' : 'transparent', fg: p === name ? '#111113' : '#5E5E66', pick: () => this.setState({ p: name }) }));
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '000', '0', '⌫'].map(l => ({ l, aria: l === '⌫' ? 'Delete' : l,
+      press: () => this.setState({ v: l === '⌫' ? v.slice(0, -1) : (v + l).replace(/^0+/, '').slice(0, 10) }) }));
+    const amount = (Number(v) || 0).toLocaleString('id-ID');
+    return { cats, pays, keys, amount };
+  }
+}
+</script>
+</body>
+</html>

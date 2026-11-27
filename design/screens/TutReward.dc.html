@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chapter complete</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:20px;padding:40px 20px 28px">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#86EFAC">CHAPTER 4 CLEARED</span>
+    <div style="width:104px;height:104px;border-radius:999px;background:#1E1E36;border:3px solid #FBBF24;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="wil" size="48" color="#FBBF24" hint-size="48px,48px"></dc-import></div>
+    <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:28px">Autopilot</h1>
+    <p style="margin:0;font-size:14px;color:#A1A1AA">Badge · your first self-checking habit</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{rewards}}" as="r" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#1C1C22">
+        <dc-import name="Icon" icon="{{r.icon}}" size="20" color="#C7CBFF" hint-size="20px,20px"></dc-import>
+        <span style="flex:1;font-size:14px;font-weight:500">{{r.name}}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#86EFAC">{{r.val}}</span>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <span style="width:40px;height:40px;flex-shrink:0;border-radius:12px;background:#1E1E36;border:2px solid #4338CA;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#C7CBFF">99</span>
+    <span style="flex:1;border-radius:4px 16px 16px 16px;padding:12px 14px;background:#1C1C22;font-size:14px;line-height:1.5">I didn't get to 99 by trying harder. I got there by making it boring. Next up: where all this is heading.</span>
+  </div>
+
+  <div style="flex:1"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;border:1px dashed #3F3F46">
+    <dc-import name="Icon" icon="target" size="18" color="#A1A1AA" hint-size="18px,18px"></dc-import>
+    <span style="flex:1;font-size:13px;color:#D4D4D8">Next: Pick a path</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#A1A1AA">~1 min</span>
+  </div>
+  <a href="TutMap.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Back to Training</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { rewards: [
+      { icon: 'sparkle', name: 'Rested XP pool', val: '+300' },
+      { icon: 'award', name: 'Badge: Autopilot', val: 'new' },
+      { icon: 'wil', name: 'WIL now tracking', val: 'live' }
+    ] };
+  }
+}
+</script>
+</body>
+</html>

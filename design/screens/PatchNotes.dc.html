@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weekly patch notes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}a:hover{color:#4338CA}
+</style>
+</helmet>
+<div style="width:390px;min-height:1000px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;gap:12px;padding:16px 16px 24px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="Main.dc.html" aria-label="Back to status" style="width:44px;height:44px;border-radius:12px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="back" size="20" hint-size="20px,20px"></dc-import></a>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Patch notes</span>
+  </div>
+
+  <section style="background:#111113;color:#F5F5F2;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:6px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#A1A1AA">v27.4 · 17–23 Nov</span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px">The cardio update</span>
+    <span style="font-size:13px;color:#D4D4D8">+3,840 verified XP · 2 level-ups · 6 of 7 days on plan</span>
+  </section>
+
+  <sc-for list="{{sections}}" as="s" hint-placeholder-count="4">
+    <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:8px"><dc-import name="Icon" icon="{{s.icon}}" size="18" color="{{s.fg}}" hint-size="18px,18px"></dc-import><h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:16px;color:{{s.fg}}">{{s.title}}</h2></div>
+      <sc-for list="{{s.items}}" as="i" hint-placeholder-count="2">
+        <div style="display:flex;gap:10px;align-items:baseline;font-size:14px;line-height:1.45">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;min-width:44px;color:{{s.fg}}">{{i.tag}}</span>
+          <span style="flex:1">{{i.text}}</span>
+        </div>
+      </sc-for>
+    </section>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const sections = [
+      { icon: 'levelup', title: 'Buffs', fg: '#166534', items: [
+        { tag: 'AGI +3', text: 'VO₂ max up 1.2 after four zone-2 runs.' },
+        { tag: 'DEX +1', text: 'Two PRs merged. Programming hit Lv 49.' } ] },
+      { icon: 'chart', title: 'Nerfs', fg: '#B45309', items: [
+        { tag: 'VIT −2', text: 'Average bedtime slipped to 23:40 on 4 nights.' } ] },
+      { icon: 'sparkle', title: 'New content', fg: '#3730A3', items: [
+        { tag: 'NEW', text: 'Achievement unlocked: 30-day streak.' },
+        { tag: 'NEXT', text: 'Locked In Builder is 1 Programming level and 9 WIL away.' } ] },
+      { icon: 'target', title: 'Known issues', fg: '#5E5E66', items: [
+        { tag: 'WIL', text: 'TikTok habit missed 3 days. Suggested quest added for next week.' } ] }
+    ];
+    return { sections };
+  }
+}
+</script>
+</body>
+</html>

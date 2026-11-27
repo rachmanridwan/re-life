@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Quests and habits</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}a:hover{color:#4338CA}
+</style>
+</helmet>
+<div style="width:390px;min-height:1000px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column">
+  <div style="padding:20px 20px 4px;display:flex;flex-direction:column;gap:12px">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px">Quests</span>
+    <div role="tablist" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:12px;background:#ECECE8">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+        <button role="tab" onClick="{{t.pick}}" style="min-height:40px;border:0;border-radius:9px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:{{t.bg}};color:{{t.fg}}">{{t.label}}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <sc-if value="{{showQuests}}" hint-placeholder-val="{{ true }}">
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#5E5E66"><span>Daily · resets in 9h 12m</span><span>2 / 4 done</span></div>
+      <sc-for list="{{quests}}" as="q" hint-placeholder-count="4">
+        <a href="{{q.href}}" style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;color:#111113;text-decoration:none">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:36px;height:36px;border-radius:10px;background:#F5F5F2;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{q.icon}}" size="18" hint-size="18px,18px"></dc-import></span>
+            <span style="flex:1;font-size:15px;font-weight:600">{{q.name}}</span>
+            <span style="font-size:11px;font-weight:600;padding:4px 8px;border-radius:999px;background:{{q.badgeBg}};color:{{q.badgeFg}}">{{q.badge}}</span>
+          </div>
+          <div style="height:6px;border-radius:999px;background:#ECECE8;overflow:hidden"><div style="width:{{q.pct}};height:100%;background:{{q.bar}}"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#5E5E66"><span>{{q.progress}}</span><span>{{q.source}}</span></div>
+        </a>
+      </sc-for>
+      <span style="font-size:12px;color:#5E5E66;text-align:center;padding:4px 0">Quests complete themselves from synced data — no checkboxes.</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{showHabits}}" hint-placeholder-val="{{ false }}">
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#5E5E66"><span>Verified habits feed WIL</span><span>WIL 41</span></div>
+      <sc-for list="{{habits}}" as="h" hint-placeholder-count="5">
+        <div style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:36px;height:36px;border-radius:10px;background:#F5F5F2;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{h.icon}}" size="18" hint-size="18px,18px"></dc-import></span>
+            <span style="flex:1;font-size:15px;font-weight:600">{{h.name}}</span>
+            <span style="font-size:11px;font-weight:600;padding:4px 8px;border-radius:999px;background:{{h.badgeBg}};color:{{h.badgeFg}}">{{h.badge}}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px">
+            <sc-for list="{{h.days}}" as="d" hint-placeholder-count="7">
+              <div style="height:22px;border-radius:6px;background:{{d.bg}}"></div>
+            </sc-for>
+          </div>
+          <span style="font-size:12px;color:#5E5E66">{{h.meta}}</span>
+        </div>
+      </sc-for>
+      <a href="NewHabit.dc.html" style="min-height:48px;border-radius:14px;border:1px dashed #C8C8C2;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600"><dc-import name="Icon" icon="plus" size="18" hint-size="18px,18px"></dc-import>New habit</a>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{showTodo}}" hint-placeholder-val="{{ false }}">
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{todos}}" as="t" hint-placeholder-count="5">
+        <label style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;min-height:44px;box-sizing:border-box">
+          <input type="checkbox" style="width:20px;height:20px;accent-color:#111113">
+          <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:14px;font-weight:500">{{t.name}}</span>
+            <span style="display:flex;align-items:center;gap:4px;font-size:12px;color:#5E5E66"><dc-import name="Icon" icon="{{t.icon}}" size="13" color="#5E5E66" hint-size="13px,13px"></dc-import>{{t.meta}}</span>
+          </span>
+        </label>
+      </sc-for>
+      <span style="font-size:12px;color:#5E5E66;text-align:center;padding:4px 0">Plain to-dos give no XP. Linked tasks close themselves from verified outcomes.</span>
+    </div>
+  </sc-if>
+
+  <div style="flex:1"></div>
+  <dc-import name="TabBar" active="quests" hint-size="390px,84px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 'quests' }; }
+  renderVals() {
+    const tab = this.state.tab;
+    const tabs = [['quests', 'Quests'], ['habits', 'Habits'], ['todo', 'To-do']].map(([id, label]) => ({
+      label, pick: () => this.setState({ tab: id }),
+      bg: tab === id ? '#FFFFFF' : 'transparent', fg: tab === id ? '#111113' : '#5E5E66'
+    }));
+    const done = { badge: 'Done · +XP', badgeBg: '#ECFDF3', badgeFg: '#166534', bar: '#16A34A' };
+    const open = { badgeBg: '#EEF0FF', badgeFg: '#3730A3', bar: '#4338CA' };
+    const quests = [
+      { href: 'Log.dc.html', icon: 'walking', name: 'Walk 8,000 steps', pct: '100%', progress: '8,412 / 8,000', source: 'Phone sensor · AGI', ...done },
+      { href: 'Focus.dc.html', icon: 'focus', name: '2 focus sessions', pct: '100%', progress: '2 / 2 · 55 min', source: 'App usage · INT', ...done },
+      { href: 'Trial.dc.html', icon: 'str', name: '20 push-ups (Trial)', pct: '0%', progress: 'Camera-counted · tap to start', source: 'STR · weakest stat', badge: 'Start', ...open },
+      { href: 'Breakdown.dc.html', icon: 'sleep', name: 'In bed by 23:00', pct: '0%', progress: 'Checked tomorrow', source: 'Smartwatch · VIT', badge: 'Tonight', ...open }
+    ];
+    const mk = (pattern) => pattern.split('').map(c => ({ bg: c === '1' ? '#111113' : c === 'g' ? '#D4D4CF' : '#ECECE8' }));
+    const ver = { badge: 'Verified', badgeBg: '#EEF0FF', badgeFg: '#3730A3' };
+    const man = { badge: 'Manual', badgeBg: '#F5F5F2', badgeFg: '#5E5E66' };
+    const habits = [
+      { icon: 'sleep', name: 'Sleep before 23:00', days: mk('1101110'), meta: 'Sleep data · 5/7 this week', ...ver },
+      { icon: 'code', name: 'Code every day', days: mk('1111111'), meta: 'WakaTime · 41-day streak', ...ver },
+      { icon: 'eye', name: 'TikTok under 1h', days: mk('1011010'), meta: 'App usage · 4/7', ...ver },
+      { icon: 'design', name: 'Journal', days: mk('gg0g0gg'), meta: 'Self-logged · streak only, no WIL', ...man }
+    ];
+    const todos = [
+      { icon: 'git', name: 'Ship login feature', meta: 'Linked · closes when PR merges · DEX' },
+      { icon: 'award', name: 'Finish Dicoding module 4', meta: 'Linked · closes on certificate · INT' },
+      { icon: 'calendar', name: 'Renew passport photo', meta: 'Plain to-do · due Fri' },
+      { icon: 'log', name: 'Call landlord', meta: 'Plain to-do' }
+    ];
+    return { tabs, quests, habits, todos, showQuests: tab === 'quests', showHabits: tab === 'habits', showTodo: tab === 'todo' };
+  }
+}
+</script>
+</body>
+</html>

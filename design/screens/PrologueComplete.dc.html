@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prologue complete — reward</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:20px;padding:24px 20px 28px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:#A1A1AA"><span>Prologue</span><span>Step 5 of 5</span></div>
+    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px"><div style="height:4px;border-radius:2px;background:#F5F5F2"></div><div style="height:4px;border-radius:2px;background:#F5F5F2"></div><div style="height:4px;border-radius:2px;background:#F5F5F2"></div><div style="height:4px;border-radius:2px;background:#F5F5F2"></div><div style="height:4px;border-radius:2px;background:#F5F5F2"></div></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px 0 4px;text-align:center">
+    <div style="width:96px;height:96px;border-radius:28px;background:#4338CA;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="trophy" size="48" color="#FFFFFF" hint-size="48px,48px"></dc-import></div>
+    <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:30px">Prologue complete</h1>
+    <p style="margin:0;font-size:14px;color:#A1A1AA">Level 19 · Rookie Builder unlocked</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-size:12px;font-weight:600;color:#A1A1AA;letter-spacing:0.04em">REWARDS</span>
+    <sc-for list="{{rewards}}" as="r" hint-placeholder-count="3">
+      <div style="border-radius:14px;padding:12px 14px;background:#1C1C22;display:flex;align-items:center;gap:12px">
+        <dc-import name="Icon" icon="{{r.icon}}" size="20" color="#C7CBFF" hint-size="20px,20px"></dc-import>
+        <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{r.name}}</span><span style="font-size:12px;color:#A1A1AA">{{r.meta}}</span></span>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="border-radius:16px;padding:14px;border:1px solid #3B3B66;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:600">Training · 6 quick chapters</span><span style="color:#A1A1AA">any order</span></div>
+    <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px">
+      <sc-for list="{{week}}" as="w" hint-placeholder-count="6">
+        <div style="aspect-ratio:1;border-radius:10px;background:#1C1C22;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{w}}" size="16" color="#A1A1AA" hint-size="16px,16px"></dc-import></div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex:1"></div>
+  <a href="TutMap.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Start Training · ~10 min</a>
+  <a href="Main.dc.html" style="text-align:center;font-size:14px;color:#A1A1AA;min-height:28px">Skip to my status window</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const rewards = [
+      { icon: 'award', name: 'Title: Prologue Complete', meta: 'Only earnable in your first week' },
+      { icon: 'star', name: 'Founding frame', meta: 'Profile border, cosmetic' },
+      { icon: 'sparkle', name: 'Rested XP pool', meta: '1.2× on your next 1,000 verified XP' }
+    ];
+    const week = ['status', 'str', 'focus', 'wil', 'target', 'treasury'];
+    return { rewards, week };
+  }
+}
+</script>
+</body>
+</html>

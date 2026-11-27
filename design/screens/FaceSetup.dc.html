@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Face setup and consent</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none;color:inherit}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:18px;padding:16px 20px 28px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="CreateCharacter.dc.html" aria-label="Back" style="width:44px;height:44px;border-radius:12px;background:#1C1C22;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="back" size="20" color="#F5F5F2" hint-size="20px,20px"></dc-import></a>
+    <span style="font-size:13px;color:#A1A1AA">Create character · face</span>
+  </div>
+  <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:30px;line-height:1.1">Make it look like you</h1>
+  <p style="margin:0;font-size:14px;line-height:1.5;color:#A1A1AA">Your body is shaped by your stats. Your face is up to you.</p>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{opts}}" as="o" hint-placeholder-count="2">
+      <button onClick="{{o.pick}}" style="min-height:76px;padding:14px;border-radius:16px;cursor:pointer;text-align:left;display:flex;gap:12px;align-items:center;font-family:Inter,sans-serif;color:#F5F5F2;background:{{o.bg}};border:1px solid {{o.border}}">
+        <span style="width:44px;height:44px;border-radius:12px;background:#26262E;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{o.icon}}" size="22" color="#C7CBFF" hint-size="22px,22px"></dc-import></span>
+        <span style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:600">{{o.title}}</span><span style="font-size:12px;color:#A1A1AA">{{o.sub}}</span></span>
+      </button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{isScan}}" hint-placeholder-val="{{ true }}">
+    <div style="border-radius:16px;padding:14px;background:#16161B;border:1px solid #2A2A31;display:flex;flex-direction:column;gap:10px">
+      <span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><dc-import name="Icon" icon="shield" size="18" color="#86EFAC" hint-size="18px,18px"></dc-import>How the scan works</span>
+      <sc-for list="{{facts}}" as="f" hint-placeholder-count="4">
+        <span style="display:flex;gap:8px;font-size:13px;line-height:1.45;color:#D4D4D8"><dc-import name="Icon" icon="check" size="16" color="#86EFAC" hint-size="16px,16px"></dc-import>{{f}}</span>
+      </sc-for>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:#F5F5F2;margin-top:4px;cursor:pointer"><input type="checkbox" checked="{{agree}}" onChange="{{toggleAgree}}" style="width:20px;height:20px;margin:0;accent-color:#818CF8">I agree to a face scan used only to shape my avatar.</label>
+    </div>
+  </sc-if>
+
+  <div style="flex:1"></div>
+  <a href="{{nextHref}}" style="min-height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;background:{{ctaBg}};color:{{ctaFg}}">{{cta}}</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { mode: 'scan', agree: true }; }
+  renderVals() {
+    const { mode, agree } = this.state;
+    const opts = [
+      ['scan', 'camera', 'Scan my face', '~20 seconds · needs an iPhone with Face ID'],
+      ['manual', 'user', 'Build it myself', 'Pick face shape, features and skin tone']
+    ].map(([id, icon, title, sub]) => ({ icon, title, sub, pick: () => this.setState({ mode: id }),
+      bg: mode === id ? '#1E1E36' : '#16161B', border: mode === id ? '#818CF8' : '#2A2A31' }));
+    const facts = [
+      'We measure face shape and skin tone, then build a stylized face from them',
+      'The scan is processed on this phone and never uploaded',
+      'Only the final slider values are saved. The scan is deleted right away',
+      'Redo or delete it any time in Settings'
+    ];
+    const isScan = mode === 'scan';
+    const ok = !isScan || agree;
+    return { opts, facts, isScan, agree, toggleAgree: () => this.setState({ agree: !agree }),
+      cta: isScan ? 'Start scan' : 'Open face editor',
+      nextHref: ok ? (isScan ? 'FaceScan.dc.html' : 'FaceAdjust.dc.html') : '#consent',
+      ctaBg: ok ? '#F5F5F2' : '#3F3F46', ctaFg: ok ? '#111113' : '#A1A1AA' };
+  }
+}
+</script>
+</body>
+</html>

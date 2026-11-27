@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Attribute breakdown — AGI</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}a:hover{color:#4338CA}
+</style>
+</helmet>
+<div style="width:390px;min-height:920px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column;gap:12px;padding:16px 16px 24px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="Main.dc.html" aria-label="Back to status" style="width:44px;height:44px;border-radius:12px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;justify-content:center">
+      <dc-import name="Icon" icon="back" size="20" hint-size="20px,20px"></dc-import>
+    </a>
+    <span style="width:32px;height:32px;border-radius:10px;background:#EEF0FF;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="agi" size="18" color="#3730A3" hint-size="18px,18px"></dc-import></span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Agility</span>
+    <span style="margin-left:auto;font-size:11px;font-weight:600;padding:5px 9px;border-radius:999px;background:#EEF0FF;color:#3730A3">MEASURED</span>
+  </div>
+
+  <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:flex-end;gap:10px">
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:56px;line-height:1">52</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:16px;color:#5E5E66;padding-bottom:6px">/ 99</span>
+      <span style="margin-left:auto;font-size:12px;font-weight:600;color:#166534;background:#ECFDF3;padding:5px 9px;border-radius:999px">+3 this month</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;font-size:12px"><span>Capability · 50%</span><span style="font-family:'JetBrains Mono',monospace">55</span></div>
+      <div style="height:6px;border-radius:999px;background:#ECECE8;overflow:hidden"><div style="width:55%;height:100%;background:#4338CA"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px"><span>Effort, 90 days · 50%</span><span style="font-family:'JetBrains Mono',monospace">49</span></div>
+      <div style="height:6px;border-radius:999px;background:#ECECE8;overflow:hidden"><div style="width:49%;height:100%;background:#111113"></div></div>
+    </div>
+  </section>
+
+  <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:16px">Capability signals</h2>
+    <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:#F5F5F2">
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600"><span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="heart" size="16" hint-size="16px,16px"></dc-import>VO₂ max</span><span style="font-family:'JetBrains Mono',monospace">44.1</span></div>
+      <span style="font-size:12px;color:#5E5E66">Fair band, near Good · Cooper Institute norms, men 20–29 · from smartwatch</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:#F5F5F2">
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600"><span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="timer" size="16" hint-size="16px,16px"></dc-import>Best 5K pace</span><span style="font-family:'JetBrains Mono',monospace">5:48/km</span></div>
+      <span style="font-size:12px;color:#5E5E66">GPS run, 9 Nov · personal best</span>
+    </div>
+  </section>
+
+  <section style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:16px">Where the XP came from</h2>
+      <span style="font-size:12px;color:#5E5E66">Avg 212 active min/week · WHO reference 150–300</span>
+    </div>
+    <sc-for list="{{events}}" as="e" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F0F0EC">
+        <span style="width:36px;height:36px;border-radius:10px;background:#F5F5F2;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{e.icon}}" size="18" hint-size="18px,18px"></dc-import></span>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:14px;font-weight:500">{{e.name}}</span>
+          <span style="font-size:12px;color:#5E5E66">{{e.meta}}</span>
+        </div>
+        <span style="font-size:11px;font-weight:600;padding:4px 8px;border-radius:999px;background:{{e.tierBg}};color:{{e.tierFg}}">{{e.tier}}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;min-width:36px;text-align:right;color:{{e.xpFg}}">{{e.xp}}</span>
+      </div>
+    </sc-for>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const S = { tierBg: '#EEF0FF', tierFg: '#3730A3', xpFg: '#111113' };
+    const events = [
+      { icon: 'running', name: 'Morning run', meta: 'Today · 45 min · zone 3 · Running 0.7', tier: 'Sensor', xp: '+41', ...S },
+      { icon: 'walking', name: 'Steps', meta: 'Yesterday · 9,214 · Walking 0.6', tier: 'Sensor', xp: '+12', ...S },
+      { icon: 'cycling', name: 'Strava ride', meta: 'Sun · 32 km · Cycling 0.6', tier: 'Platform', xp: '+38', ...S },
+      { icon: 'agi', name: 'Badminton', meta: 'Sat · typed in manually', tier: 'Self', xp: '+0', tierBg: '#F5F5F2', tierFg: '#5E5E66', xpFg: '#8A8A92' }
+    ];
+    return { events };
+  }
+}
+</script>
+</body>
+</html>

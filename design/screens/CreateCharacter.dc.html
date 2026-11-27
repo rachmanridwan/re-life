@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prologue 1 — create character</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none}
+input:focus{outline:2px solid #818CF8;outline-offset:1px}
+</style>
+</helmet>
+<div style="width:390px;min-height:960px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:22px;padding:24px 20px 28px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:#A1A1AA"><span>Prologue</span><span>Step 1 of 5</span></div>
+    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px"><div style="height:4px;border-radius:2px;background:#F5F5F2"></div><div style="height:4px;border-radius:2px;background:#3F3F46"></div><div style="height:4px;border-radius:2px;background:#3F3F46"></div><div style="height:4px;border-radius:2px;background:#3F3F46"></div><div style="height:4px;border-radius:2px;background:#3F3F46"></div></div>
+  </div>
+  <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:30px;line-height:1.1">Create your character</h1>
+
+  <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:#D4D4D8">Character name
+    <input type="text" value="Rachman" style="min-height:50px;padding:0 14px;border-radius:14px;border:1px solid #3F3F46;background:#1C1C22;font-family:Inter,sans-serif;font-size:16px;color:#F5F5F2">
+  </label>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <span style="font-size:13px;font-weight:600;color:#D4D4D8">Avatar</span>
+    <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px">
+      <sc-for list="{{avatars}}" as="a" hint-placeholder-count="6">
+        <button onClick="{{a.pick}}" aria-label="{{a.label}}" style="aspect-ratio:1;border-radius:14px;cursor:pointer;background:{{a.color}};border:2px solid {{a.ring}};display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#FFFFFF">RA</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <a href="FaceSetup.dc.html" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#1E1E36;border:1px solid #3B3B66">
+    <dc-import name="Icon" icon="camera" size="20" color="#C7CBFF" hint-size="20px,20px"></dc-import>
+    <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">Scan your face</span><span style="font-size:12px;color:#A1A1AA">For your 3D avatar · stays on this phone</span></span>
+    <dc-import name="Icon" icon="chevron" size="16" color="#A1A1AA" hint-size="16px,16px"></dc-import>
+  </a>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#D4D4D8"><span>What do you want to grow?</span><span style="color:#A1A1AA;font-weight:500">{{count}} / 3</span></div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+      <sc-for list="{{goals}}" as="g" hint-placeholder-count="6">
+        <button onClick="{{g.pick}}" style="min-height:64px;padding:12px;border-radius:14px;cursor:pointer;text-align:left;display:flex;gap:10px;align-items:center;font-family:Inter,sans-serif;background:{{g.bg}};border:1px solid {{g.border}};color:#F5F5F2">
+          <dc-import name="Icon" icon="{{g.icon}}" size="20" color="{{g.ic}}" hint-size="20px,20px"></dc-import>
+          <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{g.title}}</span><span style="font-size:11px;color:#A1A1AA">{{g.attr}}</span></span>
+        </button>
+      </sc-for>
+    </div>
+    <span style="font-size:12px;color:#A1A1AA">This shapes your first quests. It never limits what counts.</span>
+  </div>
+
+  <div style="flex:1"></div>
+  <a href="EquipGear.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Continue</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":960}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { av: 0, sel: ['agi', 'dex', 'int'] }; }
+  renderVals() {
+    const cols = ['#4338CA', '#0F766E', '#B45309', '#BE185D', '#3F3F46', '#1D4ED8'];
+    const avatars = cols.map((color, i) => ({ color, label: 'Avatar color ' + (i + 1), ring: this.state.av === i ? '#F5F5F2' : 'transparent', pick: () => this.setState({ av: i }) }));
+    const sel = this.state.sel;
+    const goals = [
+      ['str', 'Get stronger', 'STR'], ['agi', 'Build endurance', 'AGI'], ['vit', 'Sleep & recover', 'VIT'],
+      ['int', 'Learn more', 'INT'], ['dex', 'Make things', 'DEX'], ['wil', 'Be consistent', 'WIL']
+    ].map(([id, title, attr]) => {
+      const on = sel.includes(id);
+      return { icon: id, title, attr, bg: on ? '#23233A' : '#1C1C22', border: on ? '#818CF8' : '#2A2A31', ic: on ? '#C7CBFF' : '#A1A1AA',
+        pick: () => this.setState({ sel: on ? sel.filter(x => x !== id) : (sel.length < 3 ? [...sel, id] : sel) }) };
+    });
+    return { avatars, goals, count: sel.length };
+  }
+}
+</script>
+</body>
+</html>

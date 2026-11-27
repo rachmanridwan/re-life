@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Training complete — placement results</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111113}
+a{text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:1000px;box-sizing:border-box;background:#111113;font-family:Inter,sans-serif;color:#F5F5F2;display:flex;flex-direction:column;gap:18px;padding:32px 20px 28px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#FBBF24">TRAINING COMPLETE · 6 / 6</span>
+    <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:30px;line-height:1.1">You placed as<br>Rookie Builder, Lv 21</h1>
+    <span style="font-size:13px;color:#A1A1AA">Placed from 214 days of your history + today's Trial</span>
+  </div>
+
+  <section style="border-radius:20px;background:#1C1C22;padding:16px;display:flex;flex-direction:column;gap:4px">
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;font-size:11px;font-weight:600;color:#A1A1AA;padding:0 4px 6px"><span>Attribute</span><span style="text-align:right">Before</span><span style="text-align:right">Now</span><span style="text-align:right">Change</span></div>
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;align-items:center;min-height:40px;padding:0 4px;border-top:1px solid #26262E">
+        <span style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600"><dc-import name="Icon" icon="{{r.icon}}" size="16" color="#C7CBFF" hint-size="16px,16px"></dc-import>{{r.key}}</span>
+        <span style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;color:#A1A1AA">{{r.a}}</span>
+        <span style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700">{{r.b}}</span>
+        <span style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;color:{{r.fg}}">{{r.d}}</span>
+      </div>
+    </sc-for>
+  </section>
+
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <span style="width:44px;height:44px;flex-shrink:0;border-radius:14px;background:#1E1E36;border:2px solid #4338CA;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#C7CBFF">99</span>
+    <span style="flex:1;border-radius:4px 16px 16px 16px;padding:14px;background:#1C1C22;font-size:15px;line-height:1.55">That's training. Every number up there is real, and every one of them can move. Your First Quests are waiting. From here, you're writing it.</span>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid #3B3B66">
+    <dc-import name="Icon" icon="trophy" size="20" color="#FBBF24" hint-size="20px,20px"></dc-import>
+    <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">"Placed" profile frame</span><span style="font-size:12px;color:#A1A1AA">+ Rested XP · 2× XP boost for 7 days</span></span>
+  </div>
+
+  <div style="flex:1"></div>
+  <a href="Main.dc.html" style="min-height:52px;border-radius:16px;background:#F5F5F2;color:#111113;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">Start playing</a>
+  <span style="font-size:12px;color:#A1A1AA;text-align:center">Replay training any time from Settings.</span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const up = '#86EFAC', flat = '#A1A1AA', nw = '#FBBF24';
+    const rows = [
+      { key: 'STR', icon: 'str', a: '??', b: '38', d: 'rated', fg: nw },
+      { key: 'AGI', icon: 'agi', a: '48', b: '48', d: '0', fg: flat },
+      { key: 'VIT', icon: 'vit', a: '55', b: '55', d: '0', fg: flat },
+      { key: 'INT', icon: 'int', a: '39', b: '40', d: '+1', fg: up },
+      { key: 'DEX', icon: 'dex', a: '61', b: '61', d: '0', fg: flat },
+      { key: 'WIL', icon: 'wil', a: '??', b: '43', d: 'rated', fg: nw }
+    ];
+    return { rows };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity log</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F5F2}
+a{color:inherit;text-decoration:none}a:hover{color:#4338CA}
+</style>
+</helmet>
+<div style="width:390px;min-height:1000px;box-sizing:border-box;background:#F5F5F2;font-family:Inter,sans-serif;color:#111113;display:flex;flex-direction:column">
+  <header style="display:flex;align-items:center;gap:8px;padding:20px 20px 8px">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;flex:1">Log</span>
+    <button style="min-height:44px;padding:0 14px;border-radius:12px;border:1px solid #E4E4E0;background:#FFFFFF;display:flex;align-items:center;gap:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:600;color:#111113;cursor:pointer"><dc-import name="Icon" icon="plus" size="16" hint-size="16px,16px"></dc-import>Log manually</button>
+  </header>
+  <div style="display:flex;gap:8px;padding:8px 16px;overflow-x:auto">
+    <sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+      <button onClick="{{f.pick}}" style="flex-shrink:0;min-height:36px;padding:0 12px;border-radius:999px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:1px solid {{f.border}};background:{{f.bg}};color:{{f.fg}}">{{f.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="padding:8px 16px;display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{days}}" as="d" hint-placeholder-count="2">
+      <section style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#5E5E66;padding:0 4px"><span style="font-weight:600">{{d.label}}</span><span style="font-family:'JetBrains Mono',monospace">{{d.total}}</span></div>
+        <div style="background:#FFFFFF;border:1px solid #E4E4E0;border-radius:18px;padding:4px 14px">
+          <sc-for list="{{d.rows}}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F0F0EC">
+              <span style="width:36px;height:36px;border-radius:10px;background:#F5F5F2;display:flex;align-items:center;justify-content:center"><dc-import name="Icon" icon="{{r.icon}}" size="18" hint-size="18px,18px"></dc-import></span>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:14px;font-weight:500">{{r.name}}</span>
+                <span style="font-size:12px;color:#5E5E66">{{r.meta}}</span>
+                <sc-if value="{{r.self}}" hint-placeholder-val="{{ false }}">
+                  <button style="align-self:flex-start;margin-top:4px;min-height:32px;padding:0 10px;border-radius:8px;border:1px solid #D4D4CF;background:#FFFFFF;display:flex;align-items:center;gap:4px;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#111113;cursor:pointer"><dc-import name="Icon" icon="camera" size="14" hint-size="14px,14px"></dc-import>Upgrade with proof</button>
+                </sc-if>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:{{r.xpFg}}">{{r.xp}}</span>
+                <span style="font-size:10px;font-weight:600;padding:3px 7px;border-radius:999px;background:{{r.tierBg}};color:{{r.tierFg}}">{{r.tier}}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-for>
+  </div>
+
+  <div style="flex:1;min-height:16px"></div>
+  <dc-import name="TabBar" active="log" hint-size="390px,84px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { f: 'all' }; }
+  renderVals() {
+    const cur = this.state.f;
+    const filters = [['all', 'All'], ['verified', 'Verified'], ['self', 'Self-logged'], ['body', 'Body'], ['mind', 'Mind & craft']].map(([id, label]) => ({
+      label, pick: () => this.setState({ f: id }),
+      bg: cur === id ? '#111113' : '#FFFFFF', fg: cur === id ? '#FFFFFF' : '#111113', border: cur === id ? '#111113' : '#E4E4E0'
+    }));
+    const S = { tier: 'Sensor', tierBg: '#EEF0FF', tierFg: '#3730A3', xpFg: '#111113', self: false, g: 'body' };
+    const P = { tier: 'Platform', tierBg: '#EEF0FF', tierFg: '#3730A3', xpFg: '#111113', self: false, g: 'mind' };
+    const C = { tier: 'Self', tierBg: '#F5F5F2', tierFg: '#5E5E66', xpFg: '#8A8A92', self: true, g: 'body' };
+    const all = [
+      { label: 'Today', rows: [
+        { icon: 'running', name: 'Morning run', meta: '06:10 · 45 min · zone 3 → AGI, VIT, STR', xp: '+59', ...S },
+        { icon: 'code', name: 'Coding session', meta: '09:00 · 2h 14m · WakaTime → DEX, INT', xp: '+96', ...P },
+        { icon: 'focus', name: 'Focus session', meta: '13:30 · 25 min · no app switching → INT', xp: '+25', ...S, g: 'mind' }
+      ] },
+      { label: 'Yesterday', rows: [
+        { icon: 'sleep', name: 'Sleep', meta: '7h 18m · in bed 22:51 → VIT', xp: '+44', ...S },
+        { icon: 'git', name: 'PR merged', meta: 'jexa/api #212 · DEX', xp: '+40', ...P },
+        { icon: 'agi', name: 'Badminton', meta: '1h · typed in manually', xp: '+0', ...C },
+        { icon: 'walking', name: 'Steps', meta: '9,214 steps → AGI, VIT', xp: '+12', ...S }
+      ] }
+    ];
+    const keep = (r) => cur === 'all' || (cur === 'verified' && !r.self) || (cur === 'self' && r.self) || cur === r.g;
+    const days = all.map(d => { const rows = d.rows.filter(keep); return { label: d.label, rows, total: rows.length + ' events' }; }).filter(d => d.rows.length);
+    return { filters, days };
+  }
+}
+</script>
+</body>
+</html>
